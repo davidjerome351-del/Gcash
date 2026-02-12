@@ -13,7 +13,8 @@ buhay pa: N/A
 current progess in the way:
 >implementing better responsiveness for mobile
 >fixing dom-manipulation error that occasionally shows in console().
->website being flagged as dangerous by other browsers 
+>website being flagged as dangerous by other browsers
+>documentation pictures and updates that are required for the completion, turnover, of the project.
 
 **Authors:** Jerome David, Airon Gabrielle Urbano, Kyla Quite
 
