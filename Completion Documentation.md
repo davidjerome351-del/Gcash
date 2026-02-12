@@ -45,7 +45,7 @@ The site uses standard HTML elements for layout and content. Key structural comp
 ## 2. CSS Fundamentals
 
 ### Types of CSS Used
-- **External CSS** — Linked stylesheet for layout and components.
+- **External CSS** — Linked stylesheet |style.css| for layout and components.
 - **Internal CSS** — `<style>` blocks for specific adjustments.
 - **Inline CSS** — Minimal usage.
 
