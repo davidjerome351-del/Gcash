@@ -641,7 +641,7 @@ function renderSendFlow() {
                     </div>
                 </div>
                 <div class="p-6 pt-0">
-                    <button id="send-next-btn" disabled onclick="proceedSendConfirm()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-transform">Next</button>
+                    <button id="send-next-btn" enabled onclick="proceedSendConfirm()" class="w-full bg-blue-600 text-white py-4 rounded-2xl font-black disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 transition-transform">Next</button>
                 </div>
             </div>
         `;
