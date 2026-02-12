@@ -17,6 +17,7 @@ The site uses standard HTML elements for layout and content. Key structural comp
 ![Alt text](assets/md%20images/desktoplogin1.png)
 - Navigation bar visible after simulated login.
 ![Alt text](assets/md%20images/navbar.png)
+![Alt text](assets/md%20images/navbarm.png)
 ### Navigation Bar
 - Tabs labeled:
   - Home
