@@ -144,8 +144,8 @@ gcash/
 
 
 **Completion**
-<details open>Project Scope (30% Completion)
-
+<details open>
+<summary>Project Scope (30% Completion)</summary>
 state of implementation focusing on HTML and CSS fundamentals including structure, selectors, and styling applied.
 
 1. HTML Structure & Semantic Elements
