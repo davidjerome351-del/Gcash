@@ -142,5 +142,109 @@ gcash/
 - Authors: Jerome David, Airon Gabrielle Urbano, Kyla Quite
 - For questions or issues, open the `index.html` and check the browser console for errors; paste errors to the project maintainers.
 
+
+**Completion**
+<details open>Project Scope (30% Completion)
+
+state of implementation focusing on HTML and CSS fundamentals including structure, selectors, and styling applied.
+
+1. HTML Structure & Semantic Elements
+
+The site uses standard HTML elements for layout and content. Key structural elements observed include:
+-Header and Navigation (Simulated)
+-A top section displays a “Welcome Back G!” title and a login/progress form area.
+-Navigation Bar
+-Navigation elements labelled Home, Inbox, Activity, Profile visible after simulated login.
+-Main Content Sections
+-Different areas for wallet features:
+  -Wallet balance & actions (Cash In, Send, Load, Transfer, Bills)
+  -Service categories like GSave, Cards, Tap to Pay, Commute
+  -Secondary dashboard information (e.g., GCredit, Portfolio values)
+  -Footer / Secondary Navigation
+-Persistent navigation/menu appears repeated for quick switching between main views.
+
+2. CSS Fundamentals
+Types of CSS Used
+
+-External CSS: The site appears styled via linked CSS files (external stylesheets) loaded in the <head> (not shown in snippet but typical for GitHub Pages).
+-Internal CSS: Presumed use of <style> blocks for custom layout adjustments.
+-Inline CSS: Minimal or none visible in the snippet.
+
+-CSS Selectors Implemented
+  -Element selectors (e.g., div, h1, img)
+  -Class selectors for component styling (e.g., .navbar, .balance-display)
+  -ID selectors for unique elements (e.g., #login-form)
+
+-Color Value Formats
+CSS color formats:
+
+-Named colors (e.g., white, black)
+-Hexadecimal (e.g., #ffffff, #000000)
+-RGB / RGBA for opacity effects
+
+CSS Variables
+  #007CFF — --gcash-blue
+  #F4F7FA — --bg-gray
+
+RGBA Colors
+  rgba(0, 124, 255, 0.1)
+  rgba(0, 124, 255, 0.4)
+  rgba(0, 0, 0, 0.5)
+  rgba(255, 255, 255, 0.3)
+  rgba(239, 68, 68, 0.12) 
+  rgba(0,0,0,0.7)
+  rgba(255,255,255,0.9)
+  rgba(255,0,0,0.85)
+
+Hex Colors
+  #e6e9ee
+  #f4f6f9
+  #ef4444 
+  #111
+  #fff
+
+Named Colors
+
+white
+transparent
+
+3. Layout and Styling Details
+Background Properties
+
+-The interface implements background colors to differentiate UI sections:
+  -The header/login area background
+  -Navigation bar backgrounds
+  -Wallet/feature cards likely use defined background styles
+
+-CSS background properties control:
+  -background-color
+  -background-image (if any icons or gradients are loaded)
+  -background-position
+  -background-size
+  -Text and Font Properties
+  -font-size for different headings and labels
+  -text-align for centered login titles
+  -color for readability against UI backgrounds
+  -text-decoration for navigation links
+  -These ensure hierarchy and readability across UI screens.
+  -CSS Box Model
+
+-The project demonstrates an understanding of the box model:
+  -Content area containing text/images
+  -Padding and margin used for spacing UI components
+  -Borders to define buttons/labels
+  -Width/Height properties to size buttons, cards, and input fields
+  -These fundamentals form the visual layout.
+
+4. Basic HTML Elements
+
+-The project uses fundamental HTML elements such as:
+  -Headings (<h1>, <h2>, etc.)
+  -Images (<img>)
+  -Lists or repeated elements for navigation
+  -Buttons and interactive UI placeholders
+  -Divisions (<div>) to group visual blocks
+</details>
+
 ---
 prepared for submission to CC 106. 
