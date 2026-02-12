@@ -26,6 +26,7 @@ The site uses standard HTML elements for layout and content. Key structural comp
   - Profile
 
 ### Main Content Sections
+![Alt text](assets/md%20images/cashin.png)
 - Wallet balance display and quick actions:
   - Cash In
   - Send
