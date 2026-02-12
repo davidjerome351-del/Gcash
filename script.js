@@ -1799,30 +1799,14 @@ function initializeApp() {
     renderInbox();
 }
 
-// Handle browser back/forward navigation
-window.addEventListener('popstate', (event) => {
-    const path = window.location.pathname.slice(1); // remove leading /
-    if (['home', 'inbox', 'activity', 'profile'].includes(path)) {
-        switchTab(path);
-    } else {
-        switchTab('home');
-    }
-});
-
 // Auto-initialize on page load if already authenticated
 window.addEventListener('DOMContentLoaded', () => {
     const authed = (() => { try { return localStorage.getItem('gcash_authed') === 'true'; } catch(e) { return false; } })();
     if (authed) {
         document.getElementById('auth-overlay').style.display = 'none';
         initializeApp();
-        // Switch to tab based on current URL path
-        const path = window.location.pathname.slice(1);
-        if (['home', 'inbox', 'activity', 'profile'].includes(path)) {
-            switchTab(path);
-        } else {
-            switchTab('home');
-        }
-        switchWalletTab('wallet');
+        // make sure we show Home on load when already authenticated
+        try { switchTab('home'); switchWalletTab('wallet'); } catch(e) {}
     } else {
         document.getElementById('auth-overlay').style.display = 'flex';
         document.getElementById('login-card').classList.remove('hidden');
