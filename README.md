@@ -11,7 +11,7 @@
 This project is a single-page GCash-like web application prototype
 developed for CC 106.
 
-It simulates core fintech application flows including authentication,
+It simulates core fintech application, GCASH, flows including authentication,
 wallet management, transactions, savings, investment tracking, credit
 features, and messaging. The system is entirely client-side and focuses
 on UI behavior and functional interaction.

@@ -11,6 +11,7 @@ The site uses standard HTML elements for layout and content. Key structural comp
 
 ### Header and Navigation (Simulated)
 - A top section displaying a **“Welcome Back G!”** title.
+![Alt text](assets/md%20images/top%20section.png)
 - Login/progress form interface.
 - Navigation bar visible after simulated login.
 
