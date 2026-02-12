@@ -1,22 +1,19 @@
 # GCash Group 1
+**Authors:** Jerome David, Airon Gabrielle Urbano, Kyla Quite
 
-Current status:
+**Current status:**
+\Coffee taken: 16
+\hours spent: 29
+\bugs: hahaha aray
+\buhay pa: N/A
 
-Coffee taken: 16
-
-hours spent: 29
-
-bugs: hahaha aray
-
-buhay pa: N/A
-
-current progess in the way:
+**current progess** in the way:
 >implementing better responsiveness for mobile
 >fixing dom-manipulation error that occasionally shows in console().
 >website being flagged as dangerous by other browsers
 >documentation pictures and updates that are required for the completion, turnover, of the project.
 
-**Authors:** Jerome David, Airon Gabrielle Urbano, Kyla Quite
+**use of ai:** for finding explanation and debugging of errors. used tools: gpt5 and claude 
 
 **Contributions**
 - Jerome David: implemented all application code and JavaScript logic for the prototype.
