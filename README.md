@@ -10,6 +10,11 @@ bugs: hahaha aray
 
 buhay pa: N/A
 
+current progess in the way:
+>implementing better responsiveness for mobile
+>fixing dom-manipulation error that occasionally shows in console().
+>website being flagged as dangerous by other browsers 
+
 **Authors:** Jerome David, Airon Gabrielle Urbano, Kyla Quite
 
 **Contributions**
