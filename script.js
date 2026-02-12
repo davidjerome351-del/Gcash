@@ -258,9 +258,14 @@ let lastLoginDigits = '';
 const loginPhoneInput = document.getElementById('login-phone');
 
 function switchTab(tabId) {
+    // Validate tabId
+    if (!['home', 'inbox', 'activity', 'profile'].includes(tabId)) {
+        tabId = 'home';
+    }
+
     document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
     document.getElementById(`view-${tabId}`).classList.add('active');
-    
+
     document.querySelectorAll('[data-nav]').forEach(el => {
         const target = el.getAttribute('data-nav');
         if (target === tabId) {
@@ -273,19 +278,22 @@ function switchTab(tabId) {
         }
     });
 
-    const headers = { 
-        home: `Hello, ${state.userProfile.name.split(' ')[0]}!`, 
-        inbox: 'Inbox', 
-        activity: 'Activity', 
-        profile: 'Profile' 
+    const headers = {
+        home: `Hello, ${state.userProfile.name.split(' ')[0]}!`,
+        inbox: 'Inbox',
+        activity: 'Activity',
+        profile: 'Profile'
     };
-    document.getElementById('page-title').innerHTML = tabId === 'home' 
+    document.getElementById('page-title').innerHTML = tabId === 'home'
         ? `Hello, <span id="header-username">${state.userProfile.name.split(' ')[0]}</span>!`
         : headers[tabId];
 
     if (tabId === 'activity') {
         renderTransactions();
     }
+
+    // Update URL without reloading
+    history.pushState(null, '', `/${tabId}`);
 }
 
 function switchWalletTab(tabId) {
@@ -1791,14 +1799,30 @@ function initializeApp() {
     renderInbox();
 }
 
+// Handle browser back/forward navigation
+window.addEventListener('popstate', (event) => {
+    const path = window.location.pathname.slice(1); // remove leading /
+    if (['home', 'inbox', 'activity', 'profile'].includes(path)) {
+        switchTab(path);
+    } else {
+        switchTab('home');
+    }
+});
+
 // Auto-initialize on page load if already authenticated
 window.addEventListener('DOMContentLoaded', () => {
     const authed = (() => { try { return localStorage.getItem('gcash_authed') === 'true'; } catch(e) { return false; } })();
     if (authed) {
         document.getElementById('auth-overlay').style.display = 'none';
         initializeApp();
-        // make sure we show Home on load when already authenticated
-        try { switchTab('home'); switchWalletTab('wallet'); } catch(e) {}
+        // Switch to tab based on current URL path
+        const path = window.location.pathname.slice(1);
+        if (['home', 'inbox', 'activity', 'profile'].includes(path)) {
+            switchTab(path);
+        } else {
+            switchTab('home');
+        }
+        switchWalletTab('wallet');
     } else {
         document.getElementById('auth-overlay').style.display = 'flex';
         document.getElementById('login-card').classList.remove('hidden');
