@@ -14,6 +14,7 @@ The site uses standard HTML elements for layout and content. Key structural comp
 ![Alt text](assets/md%20images/top%20section.png)
 - Login/progress form interface.
 ![Alt text](assets/md%20images/desktoplogin.png)
+![Alt text](assets/md%20images/desktoplogin1.png)
 - Navigation bar visible after simulated login.
 
 ### Navigation Bar
