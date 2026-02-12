@@ -1,8 +1,13 @@
 # GCash Group 1
+
 Current status:
+
 Coffee taken: 16
+
 hours spent: 29
+
 bugs: hahaha aray
+
 buhay pa: N/A
 
 **Authors:** Jerome David, Airon Gabrielle Urbano, Kyla Quite
