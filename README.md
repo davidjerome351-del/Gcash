@@ -130,4 +130,4 @@ gcash/
 - For questions or issues, open the `index.html` and check the browser console for errors; paste errors to the project maintainers.
 
 ---
-prepared for submission to CC 106. 
+prepared for submission to CC 106.
