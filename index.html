@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GCash</title>
+    <link rel="icon" href="assets/img/1.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-slate-800">
+
+    <!-- Auth Layer -->
+    <div id="auth-overlay" class="fixed inset-0 z-[100] bg-white flex items-center justify-center p-6">
+        <div id="login-card" class="w-full max-w-md text-center">
+            <div class="flex justify-center mb-8">
+                <img src="assets/img/GCash_logo.svg" alt="GCash logo" class="h-12 object-contain">
+            </div>
+            <h1 class="text-3xl font-bold mb-2">Welcome Back G!</h1>
+            <p class="text-slate-500 mb-8 font-medium">Enter mo number mo yah</p>
+            <div class="bg-slate-50 rounded-2xl p-4 mb-6 border-2 border-transparent focus-within:border-blue-500 transition-all">
+                <div class="flex items-center">
+                    <span class="text-xl font-bold px-3 border-r border-slate-300">+63</span>
+                    <input id="login-phone" type="tel" placeholder="09XX XXX XXXX" maxlength="11" class="bg-transparent text-xl font-bold w-full px-4 outline-none">
+                </div>
+            </div>
+            <button onclick="showMPIN()" class="w-full gcash-bg text-white py-4 rounded-2xl font-bold text-lg shadow-xl active:scale-95 transition-transform">Next</button>
+        </div>
+
+        <div id="mpin-card" class="hidden w-full max-w-md text-center">
+            <h1 class="text-2xl font-bold mb-8">Enter 4-Digit MPIN</h1>
+            <div class="flex justify-center gap-4 mb-12">
+                <div class="pin-dot w-4 h-4 rounded-full border-2 border-slate-300"></div>
+                <div class="pin-dot w-4 h-4 rounded-full border-2 border-slate-300"></div>
+                <div class="pin-dot w-4 h-4 rounded-full border-2 border-slate-300"></div>
+                <div class="pin-dot w-4 h-4 rounded-full border-2 border-slate-300"></div>
+            </div>
+            <div class="grid grid-cols-3 gap-4 max-w-xs mx-auto">
+                <script>
+                    for(let i=1; i<=9; i++) document.write(`<button onclick="handlePin('${i}')" class="h-16 rounded-xl bg-slate-50 text-2xl font-bold hover:bg-blue-50 hover:text-blue-600 active:scale-90 transition-all">${i}</button>`);
+                </script>
+                <div class="h-16"></div>
+                <button onclick="handlePin('0')" class="h-16 rounded-xl bg-slate-50 text-2xl font-bold active:scale-90">0</button>
+                <button onclick="clearPin()" class="h-16 rounded-xl text-slate-400 hover:text-red-500 flex items-center justify-center active:scale-90">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 z-[600] bg-black/70 hidden items-center justify-center">
+        <div class="bg-white rounded-3xl p-8 text-center">
+            <div class="spinner mx-auto mb-4" style="border-top-color: #007CFF;"></div>
+            <p class="text-lg font-black text-blue-950">Processing...</p>
+            <p class="text-sm text-slate-500 font-medium mt-2">Please wait</p>
+        </div>
+    </div>
+
+    <div class="flex min-h-screen">
+        <!-- Desktop Sidebar -->
+        <aside class="hidden lg:flex w-72 bg-white border-r flex-col sticky top-0 h-screen">
+            <div class="p-8">
+                <div class="flex items-center gap-3 text-blue-600">
+                    <div class="flex items-center justify-center">
+                        <img src="assets/img/GCash_logo.svg" alt="GCash" class="h-8 object-contain">
+                    </div>
+                    
+                </div>
+            </div>
+            <nav class="flex-1 px-4 space-y-1">
+                <button onclick="switchTab('home')" data-nav="home" class="sidebar-link active w-full flex items-center gap-4 px-4 py-3.5 rounded-xl font-bold transition-all">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    Home
+                </button>
+                <button onclick="switchTab('inbox')" data-nav="inbox" class="sidebar-link w-full flex items-center gap-4 px-4 py-3.5 rounded-xl font-bold text-slate-500 hover:bg-slate-50 transition-all">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    Inbox
+                </button>
+                <button onclick="switchTab('activity')" data-nav="activity" class="sidebar-link w-full flex items-center gap-4 px-4 py-3.5 rounded-xl font-bold text-slate-500 hover:bg-slate-50 transition-all">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                    Activity
+                </button>
+                <button onclick="switchTab('profile')" data-nav="profile" class="sidebar-link w-full flex items-center gap-4 px-4 py-3.5 rounded-xl font-bold text-slate-500 hover:bg-slate-50 transition-all">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    Profile
+                </button>
+            </nav>
+        </aside>
+
+        <main class="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
+            <!-- Header -->
+            <header class="bg-white px-6 py-4 border-b flex justify-between items-center shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="lg:hidden flex items-center justify-center">
+                        <img src="assets/img/GCash_logo.svg" alt="GCash" class="h-6 object-contain">
+                    </div>
+                    <span id="page-title" class="text-xl font-extrabold text-blue-900 tracking-tight">Hello, <span id="header-username">User</span>!</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="showToast('Help & Support')" class="bg-blue-600 text-white px-4 py-1.5 rounded-full font-black text-[11px] uppercase tracking-wider active:scale-95 transition-transform">Help</button>
+                    <button onclick="switchTab('profile')" class="w-9 h-9 rounded-full border-2 border-blue-500 p-0.5 active:scale-95 transition-transform">
+                        <img src="https://ui-avatars.com/api/?name=User&background=007CFF&color=fff" id="header-avatar" class="w-full h-full rounded-full">
+                    </button>
+                </div>
+            </header>
+
+            <!-- Scrollable Content -->
+            <div class="flex-1 overflow-y-auto no-scrollbar p-4 lg:p-8">
+                <div class="max-w-2xl mx-auto space-y-6">
+                    
+                    <!-- Home Section -->
+                    <section id="view-home" class="view-section active space-y-6">
+                        <!-- Wallet Card -->
+                        <div class="bg-white shadow-xl rounded-[28px] overflow-hidden">
+                            <div class="flex bg-slate-50 border-b">
+                                <button onclick="switchWalletTab('wallet')" data-wallet-tab="wallet" class="wallet-tab-btn flex-1 py-4 font-black text-blue-600 border-b-4 border-blue-600 text-sm">Wallet</button>
+                                <button onclick="switchWalletTab('save')" data-wallet-tab="save" class="wallet-tab-btn flex-1 py-4 font-bold text-slate-400 text-sm">Save</button>
+                                <button onclick="switchWalletTab('borrow')" data-wallet-tab="borrow" class="wallet-tab-btn flex-1 py-4 font-bold text-slate-400 text-sm">Borrow</button>
+                                <button onclick="switchWalletTab('invest')" data-wallet-tab="invest" class="wallet-tab-btn flex-1 py-4 font-bold text-slate-400 text-sm">Invest</button>
+                            </div>
+
+                            <!-- WALLET TAB CONTENT -->
+                            <div id="wallet-content" class="wallet-tab-content">
+                                <div class="gcash-bg p-7 text-white">
+                                    <div class="flex items-center gap-2 mb-2 opacity-80">
+                                        <span class="text-[10px] font-black uppercase tracking-widest">Available Balance</span>
+                                        <button onclick="toggleBalanceVisibility()" class="focus:outline-none active:scale-90 transition-transform">
+                                            <svg id="balance-eye-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                        </button>
+                                    </div>
+                                    <div class="flex justify-between items-end">
+                                        <div class="fluid-balance">
+                                            <span class="peso">₱</span>
+                                            <span id="wallet-balance">12,564.00</span>
+                                        </div>
+                                        <button onclick="openFlow('cashin')" class="bg-white text-blue-600 px-5 py-2 rounded-full font-black text-xs shadow-lg flex items-center gap-1 active:scale-95 transition-transform">
+                                            <span class="text-lg leading-none">+</span> Cash In
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Services Grid -->
+                                <div class="p-6 grid grid-cols-4 gap-y-8 text-center">
+                                    <button onclick="openFlow('send')" class="space-y-2 active:scale-95 transition-transform"><div class="text-blue-600 flex justify-center"><svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg></div><p class="text-[11px] font-black text-blue-900">Send</p></button>
+                                    <button onclick="openFlow('load')" class="space-y-2 active:scale-95 transition-transform"><div class="text-blue-600 flex justify-center"><svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg></div><p class="text-[11px] font-black text-blue-900">Load</p></button>
+                                    <button onclick="openFlow('bank')" class="space-y-2 active:scale-95 transition-transform"><div class="text-blue-600 flex justify-center"><svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg></div><p class="text-[11px] font-black text-blue-900">Transfer</p></button>
+                                    <button onclick="openFlow('bills')" class="space-y-2 active:scale-95 transition-transform"><div class="text-blue-600 flex justify-center"><svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg></div><p class="text-[11px] font-black text-blue-900">Bills</p></button>
+                                    
+                                    <button onclick="switchWalletTab('save')" class="space-y-2 active:scale-95 transition-transform"><div class="text-blue-600 flex justify-center"><svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.407 2.67 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.407-2.67-1M12 16a3.321 3.321 0 01-.67-.1M12 16h.01"></path></svg></div><p class="text-[11px] font-black text-blue-900">GSave</p></button>
+                                    <button onclick="showToast('Manage Cards')" class="space-y-2 active:scale-95 transition-transform"><div class="text-blue-600 flex justify-center"><svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg></div><p class="text-[11px] font-black text-blue-900">Cards</p></button>
+                                    <button onclick="showToast('Tap to Pay')" class="space-y-2 active:scale-95 transition-transform"><div class="text-blue-600 flex justify-center"><svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A10.003 10.003 0 0012 3m0 0l.054.09A10.003 10.003 0 0015.44 18.532m-3.44 2.038A10.003 10.003 0 0015.44 18.532m-6.88 0c.518-.778 1.151-1.477 1.879-2.067"></path></svg></div><p class="text-[11px] font-black text-blue-900">Tap to Pay</p></button>
+                                    <button onclick="showToast('Commute Services')" class="space-y-2 active:scale-95 transition-transform"><div class="text-blue-600 flex justify-center"><svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg></div><p class="text-[11px] font-black text-blue-900">Commute</p></button>
+                                </div>
+                            </div>
+                                
+                            <!-- SAVE TAB CONTENT -->
+                            <div id="save-content" class="wallet-tab-content hidden">
+                                <div class="gcash-bg p-7 text-white">
+                                    <div class="flex items-center gap-2 mb-2 opacity-80">
+                                        <span class="text-[10px] font-black uppercase tracking-widest">GSave Balance</span>
+                                    </div>
+                                    <div class="flex justify-between items-end">
+                                        <div class="fluid-balance">
+                                            <span class="peso">₱</span>
+                                            <span>0.00</span>
+                                        </div>
+                                        <div class="flex gap-2">
+                                            <button onclick="openSave('deposit')" class="bg-white text-blue-600 px-4 py-2 rounded-full font-black text-xs shadow-lg active:scale-95 transition-transform">Deposit</button>
+                                            <button onclick="openSave('withdraw')" class="bg-white text-blue-600 px-4 py-2 rounded-full font-black text-xs shadow-lg active:scale-95 transition-transform">Withdraw</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="p-6 grid grid-cols-2 gap-4">
+                                    <div class="p-4 rounded-2xl border-2 border-slate-100 bg-white text-left">
+                                        <div class="text-blue-900 font-black text-sm">Auto Save</div>
+                                        <p class="text-xs text-slate-500">Set up recurring deposits</p>
+                                    </div>
+                                    <div class="p-4 rounded-2xl border-2 border-slate-100 bg-white text-left">
+                                        <div class="text-blue-900 font-black text-sm">Learn More</div>
+                                        <p class="text-xs text-slate-500">About GSave</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- BORROW & INVEST TABS (keeping existing static content) -->
+                            <div id="borrow-content" class="wallet-tab-content hidden">
+                                <div class="gcash-bg p-7 text-white">
+                                    <div class="flex justify-between items-center">
+                                        <h3 class="text-2xl font-black">GCredit</h3>
+                                        <button onclick="showToast('Learn More about Borrowing')" class="bg-white text-blue-600 px-5 py-2 rounded-full font-black text-xs shadow-lg active:scale-95 transition-transform">LEARN MORE</button>
+                                    </div>
+                                    <div class="mt-4 grid grid-cols-2 gap-4">
+                                        <div>
+                                            <div class="text-xs opacity-80">GCredit Limit</div>
+                                            <div class="text-2xl font-black">₱<span id="gcredit-limit">3,000.00</span></div>
+                                        </div>
+                                        <div>
+                                            <div class="text-xs opacity-80">Available</div>
+                                            <div class="text-2xl font-black">₱<span id="gcredit-available">3,000.00</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-6 space-y-6">
+                                    <div>
+                                        <h4 class="text-slate-500 font-bold text-xs mb-3">Borrowing Dashboard</h4>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <div class="p-4 rounded-2xl border-2 border-slate-100 bg-white text-left">
+                                                <div class="text-blue-900 font-black text-sm">GCredit Used</div>
+                                                <p id="gcredit-used" class="text-xs text-slate-500">₱0.00</p>
+                                            </div>
+                                            <div class="p-4 rounded-2xl border-2 border-slate-100 bg-white text-left">
+                                                <div class="text-blue-900 font-black text-sm">Pay Bills</div>
+                                                <p class="text-xs text-slate-500">Use wallet or GCredit</p>
+                                                <div class="mt-3 flex gap-2">
+                                                    <button onclick="openFlow('bills')" class="px-3 py-2 rounded-xl bg-blue-600 text-white font-black">Pay (Wallet)</button>
+                                                    <button id="pay-gcredit-btn" onclick="payBillsWithGcredit()" class="px-3 py-2 rounded-xl bg-yellow-400 text-yellow-900 font-black">Pay (GCredit)</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="invest-content" class="wallet-tab-content hidden">
+                                <div class="gcash-bg p-7 text-white">
+                                    <div class="flex items-center gap-2 mb-2 opacity-80">
+                                        <span class="text-[10px] font-black uppercase tracking-widest">Total Portfolio Value</span>
+                                    </div>
+                                    <div class="flex justify-between items-end">
+                                        <div class="fluid-balance">
+                                            <span class="peso">₱</span>
+                                            <span id="portfolio-value">12,345.00</span>
+                                        </div>
+                                        <button onclick="openFlow('invest')" class="bg-white text-blue-600 px-5 py-2 rounded-full font-black text-xs shadow-lg active:scale-95 transition-transform">Invest</button>
+                                    </div>
+                                    <p class="text-[10px] mt-2 opacity-70 font-medium">As of February 5, 2026</p>
+                                </div>
+                                <div class="p-6">
+                                    <h4 class="font-black text-blue-950 mb-3">Market Trend</h4>
+                                    <div class="bg-white rounded-2xl p-4">
+                                        <svg viewBox="0 0 200 80" class="w-full h-24">
+                                            <polyline fill="none" stroke="#0b5fff" stroke-width="3" points="0,60 20,50 40,55 60,38 80,45 100,30 120,35 140,20 160,25 180,18 200,22" />
+                                        </svg>
+                                        <p class="text-xs text-slate-500 mt-2">Dummy market trend (simulated)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Explore App -->
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-black text-blue-950 text-lg">Explore the App</h4>
+                                <button onclick="showToast('View All Features')" class="text-blue-600 font-black text-sm flex items-center gap-1 active:scale-95 transition-transform">View All <span class="bg-blue-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px]">→</span></button>
+                            </div>
+                            <div class="flex gap-4 overflow-x-auto no-scrollbar pb-2">
+                                <button onclick="openServiceHub('GInsure')" class="min-w-[80px] flex flex-col items-center gap-2 active:scale-95 transition-transform">
+                                    <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-100">🛡️</div>
+                                    <span class="text-[10px] font-black text-blue-950">GInsure</span>
+                                </button>
+                                <button onclick="openServiceHub('A+ Rewards')" class="min-w-[80px] flex flex-col items-center gap-2 active:scale-95 transition-transform">
+                                    <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-100">🎁</div>
+                                    <span class="text-[10px] font-black text-blue-950">A+ Rewards</span>
+                                </button>
+                                <button onclick="openServiceHub('Food Hub')" class="min-w-[80px] flex flex-col items-center gap-2 active:scale-95 transition-transform">
+                                    <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-100">🍔</div>
+                                    <span class="text-[10px] font-black text-blue-950">Food Hub</span>
+                                </button>
+                                <button onclick="openServiceHub('Travel')" class="min-w-[80px] flex flex-col items-center gap-2 active:scale-95 transition-transform">
+                                    <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-100">✈️</div>
+                                    <span class="text-[10px] font-black text-blue-950">Travel</span>
+                                </button>
+                                <button onclick="openServiceHub('GForest')" class="min-w-[80px] flex flex-col items-center gap-2 active:scale-95 transition-transform">
+                                    <div class="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-sm border border-slate-100">🌳</div>
+                                    <span class="text-[10px] font-black text-blue-950">GForest</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Banner Card -->
+                        <button onclick="showToast('Spin to Win Promo')" class="w-full bg-gradient-to-br from-blue-500 to-indigo-700 rounded-[2rem] p-8 text-white relative overflow-hidden shadow-xl aspect-[16/9] flex flex-col justify-end text-left active:scale-[0.98] transition-transform">
+                            <div class="absolute top-4 right-4 bg-blue-950/30 backdrop-blur px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-tighter">Extended until Feb 28!</div>
+                            <h5 class="text-3xl font-black leading-none mb-2 italic">SPIN TO WIN,<br>EXTENDED NA!</h5>
+                            <p class="text-xs font-bold opacity-80 mb-4">May chance ka manalo ng ₱1M! 🤑</p>
+                            <div class="w-max bg-white text-blue-600 px-6 py-2 rounded-full font-black text-[10px] uppercase shadow-lg">Spin Now</div>
+                        </button>
+                    </section>
+
+                    <!-- Inbox Section -->
+                    <section id="view-inbox" class="view-section space-y-4">
+                        <div class="bg-white rounded-[2rem] p-12 text-center border">
+                            <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">📩</div>
+                            <h3 class="text-2xl font-black text-blue-950">Inbox Empty</h3>
+                            <p class="text-slate-500 font-medium">New messages will appear here!</p>
+                        </div>
+                    </section>
+
+                    <!-- Activity Section -->
+                    <section id="view-activity" class="view-section space-y-4">
+                        <div class="bg-white rounded-[2rem] overflow-hidden border shadow-sm">
+                            <!-- Search & Filter -->
+                            <div class="p-4 border-b space-y-3">
+                                <div class="bg-slate-50 rounded-xl p-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                    <input type="text" id="activity-search" placeholder="Search transactions..." class="bg-transparent w-full outline-none font-medium text-sm" oninput="filterTransactions()">
+                                </div>
+                                <div class="flex gap-2 overflow-x-auto no-scrollbar">
+                                    <button onclick="setActivityFilter('all')" data-filter="all" class="activity-filter-btn active px-4 py-2 rounded-full font-black text-xs bg-blue-600 text-white whitespace-nowrap">All</button>
+                                    <button onclick="setActivityFilter('cash-in')" data-filter="cash-in" class="activity-filter-btn px-4 py-2 rounded-full font-black text-xs bg-white text-slate-600 border whitespace-nowrap">Cash In</button>
+                                    <button onclick="setActivityFilter('sent')" data-filter="sent" class="activity-filter-btn px-4 py-2 rounded-full font-black text-xs bg-white text-slate-600 border whitespace-nowrap">Sent</button>
+                                    <button onclick="setActivityFilter('received')" data-filter="received" class="activity-filter-btn px-4 py-2 rounded-full font-black text-xs bg-white text-slate-600 border whitespace-nowrap">Received</button>
+                                    <button onclick="setActivityFilter('bills')" data-filter="bills" class="activity-filter-btn px-4 py-2 rounded-full font-black text-xs bg-white text-slate-600 border whitespace-nowrap">Bills</button>
+                                </div>
+                            </div>
+
+                            <!-- Transaction List -->
+                            <div id="activity-list" class="divide-y">
+                                <!-- Dynamically rendered -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Profile Section -->
+                    <section id="view-profile" class="view-section space-y-4">
+                        <div class="bg-white rounded-[2.5rem] border overflow-hidden shadow-lg">
+                            <div class="bg-gradient-to-br from-blue-500 to-indigo-600 p-8 text-center relative">
+                                <div class="absolute top-4 right-4">
+                                    <button onclick="openEditProfile()" class="bg-white/20 backdrop-blur text-white p-2 rounded-full active:scale-95 transition-transform">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                    </button>
+                                </div>
+                                <img src="https://ui-avatars.com/api/?name=User&background=007CFF&color=fff&size=128" id="profile-avatar" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-white shadow-lg">
+                                <h3 id="profile-name" class="text-2xl font-black text-white mb-1">User</h3>
+                                <p id="profile-phone" class="text-white/80 font-bold mb-2">+63 969 169 4200</p>
+                                <div class="flex justify-center gap-2">
+                                    <span class="bg-white/20 backdrop-blur text-white text-xs font-black px-3 py-1 rounded-full">Verified ✓</span>
+                                    <span class="bg-yellow-400 text-yellow-900 text-xs font-black px-3 py-1 rounded-full">Gold Member</span>
+                                </div>
+                            </div>
+
+                            <div class="p-6 space-y-3">
+                                <button onclick="openAccountDetails()" class="w-full flex items-center justify-between p-4 rounded-2xl hover:bg-slate-50 active:scale-[0.99] transition-all">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                        </div>
+                                        <div class="text-left">
+                                            <h4 class="font-black text-blue-950 text-sm">Account Details</h4>
+                                            <p class="text-xs text-slate-500 font-medium">View your information</p>
+                                        </div>
+                                    </div>
+                                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+                                </button>
+
+                                <button onclick="openChangePin()" class="w-full flex items-center justify-between p-4 rounded-2xl hover:bg-slate-50 active:scale-[0.99] transition-all">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center text-green-600">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                                        </div>
+                                        <div class="text-left">
+                                            <h4 class="font-black text-blue-950 text-sm">Security & Privacy</h4>
+                                            <p class="text-xs text-slate-500 font-medium">Change MPIN, biometrics</p>
+                                        </div>
+                                    </div>
+                                    <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></svg>
+                                </button>
+                            </div>
+
+                            <div class="p-6 pt-0">
+                                <button onclick="logout()" class="w-full py-4 bg-red-50 text-red-600 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-red-100 active:scale-95 transition-all">
+                                    <span class="flex items-center justify-center gap-2">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                                        Logout Account
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+
+            <!-- MOBILE BOTTOM NAV -->
+            <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t flex items-end justify-between px-4 pb-2 pt-3 z-50 shadow-[0_-5px_20px_rgba(0,0,0,0.05)]">
+                <button onclick="switchTab('home')" data-nav="home" class="nav-item active flex-1 flex flex-col items-center gap-1 group">
+                    <svg class="w-6 h-6 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    <span class="text-[10px] font-black">Home</span>
+                </button>
+                <button onclick="switchTab('inbox')" data-nav="inbox" class="nav-item flex-1 flex flex-col items-center gap-1 group text-slate-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <span class="text-[10px] font-black">Inbox</span>
+                </button>
+                <button onclick="showScanner()" class="flex-1 flex flex-col items-center px-2">
+                    <div class="qr-fab w-14 h-14 gcash-bg rounded-full flex items-center justify-center text-white border-4 border-white active:scale-95 transition-transform">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h3m-3 3h3m7.5 1h-3m-1 3.5V15m.5-1.5V11m-10 10v-3.333a2 2 0 01.4-.24M15 15h3m-5-10.5h.5M10.5 10.5h.5m-5 0h.5m-1 5.5h.5"></path><rect width="6" height="6" x="3" y="3" rx="1"/><rect width="6" height="6" x="15" y="3" rx="1"/><rect width="6" height="6" x="3" y="15" rx="1"/></svg>
+                    </div>
+                    <span class="text-[10px] font-black text-blue-900 -mt-5">QR</span>
+                </button>
+                <button onclick="switchTab('activity')" data-nav="activity" class="nav-item flex-1 flex flex-col items-center gap-1 group text-slate-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                    <span class="text-[10px] font-black">Activity</span>
+                </button>
+                <button onclick="switchTab('profile')" data-nav="profile" class="nav-item flex-1 flex flex-col items-center gap-1 group text-slate-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    <span class="text-[10px] font-black">Profile</span>
+                </button>
+            </nav>
+        </main>
+    </div>
+
+    <!-- Flow Modal Container -->
+    <div id="flow-modal" class="flow-modal"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
