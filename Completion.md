@@ -1,6 +1,6 @@
 # Completion
 
-<details open>
+<details>
 <summary><strong>Project Scope (30% Completion)</strong></summary>
 
 ---
