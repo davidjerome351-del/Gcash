@@ -2,129 +2,171 @@
 
 <details close>
 <summary><strong>Project Scope (30% Completion - Finished February 12, 2026)</strong></summary>
+# Frontend Completion Report — 30%
+
+> **Project:** GCash Demo Web App  
+> **Files:** `index.html` · `style.css`  
+> **Status:** 🔴 30% Complete — Structural foundation laid, most features not yet implemented
 
 ---
 
-## 1. HTML Structure & Semantic Elements
+## Table of Contents
 
-The site uses standard HTML elements for layout and content. Key structural components include:
+1. [Project Structure Overview](#project-structure-overview)
+2. [HTML Structure & Semantic Elements](#html-structure--semantic-elements)
+3. [CSS Fundamentals Implemented](#css-fundamentals-implemented)
+4. [Layout and Styling Details](#layout-and-styling-details)
+5. [Color System](#color-system)
+6. [Basic HTML Elements Used](#basic-html-elements-used)
+7. [What Is Done vs. Not Done](#what-is-done-vs-not-done)
+8. [Completion Summary Table](#completion-summary-table)
 
-### Header and Navigation (Simulated)
-- A top section displaying a **“Welcome Back G!”** title.
-![Alt text](assets/md%20images/top%20section.png)
-- Login/progress form interface.
-![Alt text](assets/md%20images/desktoplogin.png)
-![Alt text](assets/md%20images/desktoplogin1.png)
-- Navigation bar visible after simulated login.
-![Alt text](assets/md%20images/navbar.png)
-![Alt text](assets/md%20images/navbarm.png)
+---
+
+## Project Structure Overview
+
+At this stage, the project has its foundational files in place. The HTML document defines the page skeleton and references external assets, while `style.css` establishes the design system. No JavaScript logic is active yet — the interface is static and non-interactive beyond what the browser provides by default.
+
+```
+index.html          — Page structure, sections, and static content
+style.css           — Custom styles, CSS variables, and component rules
+assets/img/         — GCash logo SVGs and screenshot references
+script.js           — Not yet connected / not yet implemented
+```
+
+---
+
+## HTML Structure & Semantic Elements
+
+### Authentication Screen
+
+The page opens with a simulated login interface. This is the first thing visible to the user before any session exists.
+
+- A welcome heading — **"Welcome Back G!"** — is displayed at the top of the auth screen
+- A phone number input field styled with a `+63` country code prefix
+- A login progress form structure is in place with a Next button
+
+![Login Screen](assets/md%20images/desktoplogin.png)
+![Login Screen MPIN](assets/md%20images/desktoplogin1.png)
+
 ### Navigation Bar
-- Tabs labeled:
-  - Home
-  - Inbox
-  - Activity
-  - Profile
+
+After the simulated login step, a navigation bar becomes visible. It contains the primary tab links for the app.
+
+**Desktop sidebar navigation:**
+
+![Desktop Navbar](assets/md%20images/navbar.png)
+
+**Mobile bottom navigation:**
+
+![Mobile Navbar](assets/md%20images/navbarm.png)
+
+Tabs present in the navigation:
+- Home
+- Inbox
+- Activity
+- Profile
 
 ### Main Content Sections
-![Alt text](assets/md%20images/cashin.png)
-- Wallet balance display and quick actions:
-  - Cash In
-  - Send
-  - Load
-  - Transfer
-  - Bills
-- Service categories:
-  - GSave
-  - Cards
-  - Tap to Pay
-  - Commute
-- Secondary dashboard information:
-  - GCredit
-  - Portfolio values
+
+The home view contains a wallet balance area and a set of quick-action service buttons.
+
+![Wallet / Cash In area](assets/md%20images/cashin.png)
+
+**Wallet card quick actions (HTML buttons present):**
+- Cash In
+- Send
+- Load
+- Transfer
+- Bills
+
+**Service category buttons (HTML buttons present):**
+- GSave
+- Cards
+- Tap to Pay
+- Commute
+
+**Secondary dashboard panels (HTML shells present):**
+- GCredit limit and available balance display
+- Portfolio value display
+
+### Top Section
+
+A persistent header sits above the main content area. It contains the page title and a greeting.
+
+![Top Section](assets/md%20images/top%20section.png)
 
 ### Footer / Secondary Navigation
-- Persistent navigation menu for switching between main views.
+
+A persistent bottom navigation bar exists at mobile widths for switching between the four main views: Home, Inbox, Activity, and Profile.
 
 ---
 
-## 2. CSS Fundamentals
+## CSS Fundamentals Implemented
 
 ### Types of CSS Used
-- **External CSS** — Linked stylesheet |style.css| for layout and components.
-- **Internal CSS** — `<style>` blocks for specific adjustments.
-- **Inline CSS** — Minimal usage.
+
+Three types of CSS are applied across the project at this stage:
+
+**External CSS** — The primary `style.css` file is linked in the `<head>` and handles all custom component and layout rules outside of Tailwind.
+
+**Internal CSS** — Minor `<style>` blocks are used within the HTML for specific page-level adjustments where utility classes are insufficient.
+
+**Inline CSS** — Used sparingly for cases where a single property override is needed directly on an element.
 
 ### CSS Selectors Implemented
-- Element selectors (`div`, `h1`, `img`)
-- Class selectors (`.navbar`, `.balance-display`)
-- ID selectors (`#login-form`)
+
+The stylesheet uses a mix of selector types:
+
+- Element selectors targeting base HTML tags — `div`, `h1`, `img`
+- Class selectors for reusable components — `.navbar`, `.balance-display`
+- ID selectors for unique page elements — `#login-form`
 
 ---
 
-### Color Value Formats
-
-#### Named Colors
-- `white`
-- `transparent`
-
-#### Hexadecimal
-- `#007CFF` — `--gcash-blue`
-- `#F4F7FA` — `--bg-gray`
-- `#e6e9ee`
-- `#f4f6f9`
-- `#ef4444`
-- `#111`
-- `#fff`
-
-#### RGB / RGBA
-- `rgba(0, 124, 255, 0.1)`
-- `rgba(0, 124, 255, 0.4)`
-- `rgba(0, 0, 0, 0.5)`
-- `rgba(255, 255, 255, 0.3)`
-- `rgba(239, 68, 68, 0.12)`
-- `rgba(0, 0, 0, 0.7)`
-- `rgba(255, 255, 255, 0.9)`
-- `rgba(255, 0, 0, 0.85)`
-
----
-
-## 3. Layout and Styling Details
+## Layout and Styling Details
 
 ### Background Properties
-The interface uses background styling to differentiate UI sections:
-- Header / login area
-- Navigation bar
-- Wallet and feature cards
 
-CSS properties applied:
-- `background-color`
-- `background-image`
-- `background-position`
-- `background-size`
+Background styling is applied to visually separate different UI sections. The following CSS properties are in use:
 
----
+- `background-color` — solid fills for cards, nav, and body
+- `background-image` — gradient overlays on the wallet header and banner areas
+- `background-position` — used for gradient and pattern alignment
+- `background-size` — controls coverage of background gradients
 
 ### Text and Font Properties
-- `font-size` for visual hierarchy
-- `text-align` for centered elements
-- `color` for readability
-- `text-decoration` for navigation styling
 
----
+Typography is set through a combination of Tailwind utility classes and the following CSS properties in `style.css`:
+
+- `font-size` — establishes visual hierarchy between headings, labels, and body text
+- `text-align` — centers content in cards, modals, and the auth screen
+- `color` — applied for brand color, muted text, and state colors
+- `text-decoration` — used on navigation link elements
 
 ### CSS Box Model Implementation
-demonstrates correct usage of:
-- Content areas for text and images
-- `padding` and `margin` for spacing
-- `border` styling for buttons and cards
-- `width` and `height` control for UI elements
 
-````
+The box model is applied consistently across cards, buttons, and layout containers:
+
+- **Content areas** — defined widths and heights for text blocks and images
+- `padding` — inner spacing for card panels, button labels, and input fields
+- `margin` — outer spacing between sections and grouped elements
+- `border` — used for card outlines, input field focus rings, and separator lines
+- `width` and `height` — constrain button sizes, avatar images, and icon containers
+
+```css
 :root {
     --gcash-blue: #007CFF;
     --bg-gray: #F4F7FA;
 }
-body { font-family: 'Inter', sans-serif; background-color: var(--bg-gray); overscroll-behavior: none; min-width: 360px; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-gray);
+    overscroll-behavior: none;
+    min-width: 360px;
+}
+
 .gcash-bg { background-color: var(--gcash-blue); }
 .gcash-text { color: var(--gcash-blue); }
 
@@ -162,81 +204,133 @@ main { min-width: 360px; max-width: 100vw; }
 @media (max-width: 1023px) {
     main { padding-bottom: 80px; }
 }
-
-/* Flow Modal Styles */
-.flow-modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 500;
-    background: rgba(0, 0, 0, 0.5);
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-}
-.flow-modal.active { display: flex; }
-
-/* Loading Spinner */
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-.spinner {
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-top-color: white;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-}
-
-/* Slide animations */
-@keyframes slideInRight {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
-.slide-in { animation: slideInRight 0.3s ease-out; }
-/* Skeleton loader */
-.skeleton-overlay { position: absolute; inset: 0; z-index: 400; display:flex; align-items:flex-start; justify-content:center; padding:2rem; }
-.skeleton-card { width:100%; max-width:720px; background:transparent; }
-.skeleton-box { height:20px; background:linear-gradient(90deg,#e6e9ee 25%, #f4f6f9 50%, #e6e9ee 75%); background-size:200% 100%; animation: shimmer 1s linear infinite; border-radius:8px; margin-bottom:12px; }
-.skeleton-hero { height:120px; border-radius:20px; margin-bottom:16px; }
-@keyframes shimmer { from { background-position:200% 0 } to { background-position:-200% 0 } }
-/* Inbox badge */
-[data-nav="inbox"].has-unread::after,
-/*.sidebar-link[data-nav="inbox"].has-unread::after {
-    content: '';
-    position: absolute;
-    top: 8px;
-    right: 12px;
-    width: 10px;
-    height: 10px;
-    background: #ef4444;
-    border-radius: 999px;
-    box-shadow: 0 0 0 3px rgba(239,68,68,0.12);
-}*/
-/* Scanner overlay */
-.scanner-overlay { position: fixed; inset: 0; z-index: 700; pointer-events: auto; }
-.scanner-overlay .mask { position: absolute; inset: 0; }
-.scanner-overlay .mask::before { content: ''; position: absolute; left: 50%; top: 45%; width: 320px; height: 320px; transform: translate(-50%, -50%); box-shadow: 0 0 0 9999px rgba(0,0,0,0.7); border: 2px solid rgba(255,255,255,0.9); border-radius: 12px; }
-.scanner-overlay .viewfinder { position: absolute; left: 50%; top: 45%; width: 320px; height: 320px; transform: translate(-50%, -50%); pointer-events: none; display: flex; align-items: center; justify-content: center; }
-.scanner-overlay .scan-line { position: absolute; left: calc(50% - 150px); top: calc(45% - 150px); width: 300px; height: 2px; background: rgba(255,0,0,0.85); transform-origin: left; animation: scanMove 2s linear infinite; }
-@keyframes scanMove { 0% { transform: translateY(0); } 50% { transform: translateY(300px); } 100% { transform: translateY(0); } }
-.scanner-overlay .scanner-controls { position: absolute; bottom: 6rem; left: 50%; transform: translateX(-50%); color: white; text-align: center; }
-
-/* Barcode placeholder */
-.barcode-placeholder { width: 220px; height: 80px; background: repeating-linear-gradient(90deg, #111 0 6px, #fff 6px 10px); border-radius: 6px; box-shadow: inset 0 0 0 3px #fff; }
-````
----
-
-## 4. Basic HTML Elements Used
-
-- Headings (`<h1>`, `<h2>`, etc.)
-- Images (`<img>`)
-- Navigation lists
-- Buttons
-- Divisions (`<div>`) for grouping UI components
+```
 
 ---
+
+## Color System
+
+The color system is established through CSS custom properties and direct values across `style.css`. All color formats in use at this stage are documented below.
+
+### CSS Custom Properties
+
+```css
+--gcash-blue: #007CFF
+--bg-gray:    #F4F7FA
+```
+
+### Named Colors
+
+- `white`
+- `transparent`
+
+### Hexadecimal
+
+| Value | Usage |
+|---|---|
+| `#007CFF` | Primary brand blue (`--gcash-blue`) |
+| `#F4F7FA` | Page background gray (`--bg-gray`) |
+| `#e6e9ee` | Skeleton loader base color |
+| `#f4f6f9` | Skeleton loader shimmer highlight |
+| `#ef4444` | Inbox unread badge red |
+| `#111` | Barcode placeholder dark bars |
+| `#fff` | White fills and overlays |
+
+### RGB / RGBA
+
+| Value | Usage |
+|---|---|
+| `rgba(0, 124, 255, 0.1)` | Active nav item SVG fill tint |
+| `rgba(0, 124, 255, 0.4)` | QR FAB button drop shadow |
+| `rgba(0, 0, 0, 0.5)` | Flow modal backdrop |
+| `rgba(255, 255, 255, 0.3)` | Spinner track ring |
+| `rgba(239, 68, 68, 0.12)` | Inbox badge glow ring |
+| `rgba(0, 0, 0, 0.7)` | Loading overlay background |
+| `rgba(255, 255, 255, 0.9)` | Scanner viewfinder border |
+| `rgba(255, 0, 0, 0.85)` | Scanner red scan line |
+
+---
+
+## Basic HTML Elements Used
+
+The following standard HTML elements are present in `index.html` at this stage:
+
+- **Headings** — `<h1>` through `<h4>` for page title, section headers, card titles, and labels
+- **Images** — `<img>` for the GCash logo, avatar placeholder, and asset references
+- **Navigation lists** — `<nav>` with `<button>` elements for tab switching
+- **Buttons** — `<button>` throughout for service actions, form submission, and navigation
+- **Divisions** — `<div>` as the primary grouping container for all UI component layouts
+- **Inputs** — `<input>` for phone number entry and MPIN field
+- **Sections** — `<section>` as the semantic wrapper for each named view panel
+- **Aside** — `<aside>` for the desktop sidebar navigation
+
+---
+
+## What Is Done vs. Not Done
+
+### Done at 30%
+
+- Page `<head>` setup — charset, viewport, title, Tailwind CDN, Google Fonts, `style.css` link
+- CSS custom properties (`--gcash-blue`, `--bg-gray`)
+- Base `body` styles — font family, background color, overscroll behavior, min-width
+- `.view-section` show/hide system via `display: none / block`
+- Active state styles for `.nav-item` and `.sidebar-link`
+- `.fluid-balance` responsive font scaling with `clamp()`
+- `.qr-fab` elevated floating button style
+- `.no-scrollbar` scrollbar suppression
+- Mobile bottom padding media query (`padding-bottom: 80px`)
+- `.flow-modal` overlay shell and `.flow-modal.active` display rule
+- `@keyframes spin` and `.spinner` loading animation
+- `@keyframes slideInRight` and `.slide-in` entry animation
+- Skeleton loader CSS (`.skeleton-box`, `.skeleton-hero`, `@keyframes shimmer`)
+- Scanner overlay CSS (`.scanner-overlay`, `.scan-line`, `@keyframes scanMove`)
+- Barcode placeholder CSS (`.barcode-placeholder`)
+- Auth overlay HTML structure — login card and MPIN card shells
+- Desktop sidebar HTML with nav button stubs
+- Mobile bottom nav HTML with 5 tab buttons
+- Top header HTML with title, Help button, and avatar
+- Wallet card section with 4 sub-tab buttons (Wallet, Save, Borrow, Invest)
+- Services grid buttons (8 items) — HTML and icons present
+- Static balance display placeholder text
+- Profile section HTML with avatar, name, phone, and action buttons
+
+### Not Done at 30%
+
+- No JavaScript — nothing is interactive, flows do not open, tabs do not switch
+- No dynamic balance rendering — balance values are hardcoded placeholder text
+- No transaction list — `#activity-list` container is empty
+- No inbox messages — `#view-inbox` shows only the static empty state
+- No form validation — phone input and MPIN entry have no feedback logic
+- Inbox unread badge CSS is commented out — badge is invisible even when class is present
+- Skeleton loader has no HTML targets to animate
+- No service hub screens — all Explore buttons lead nowhere
+- No modal content — `#flow-modal` container is an empty shell
+- No profile data binding — name, phone, and avatar are placeholder defaults
+- No responsive fine-tuning beyond the single mobile media query
+
+---
+
+## Completion Summary Table
+
+| Area | Completion | Notes |
+|---|---|---|
+| HTML document structure | 70% | All shells exist, content areas are empty |
+| Auth screen HTML | 60% | Structure done, no validation or logic |
+| Navigation HTML | 80% | All tabs and links present |
+| Home section HTML | 50% | Buttons exist, no flows wired |
+| Inbox section HTML | 30% | Empty state only |
+| Activity section HTML | 20% | Container only, no list content |
+| Profile section HTML | 60% | Static layout done, no data binding |
+| CSS custom properties | 100% | Color variables fully defined |
+| CSS layout rules | 70% | Core rules in place |
+| CSS animations | 80% | Defined, some have no HTML targets yet |
+| CSS responsive design | 40% | Single breakpoint, no fine-tuning |
+| Interactivity / JS | 0% | Not yet connected |
+| **Overall** | **~30%** | Foundation set, no working features yet |
+
+---
+
+*Frontend built with Tailwind CSS (CDN), custom `style.css`, and standard HTML5. JavaScript not yet integrated at this stage.*
 
 </details>
 
