@@ -1,7 +1,7 @@
 # Completion
 
-<details open>
-<summary><strong>Project Scope (30% Completion _ FINISHED FEBRUARY 12)</strong></summary>
+<details close>
+<summary><strong>Project Scope (30% Completion - Finished February 12, 2026)</strong></summary>
 
 ---
 
