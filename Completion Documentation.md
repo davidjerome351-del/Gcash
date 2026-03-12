@@ -244,7 +244,7 @@ main { min-width: 360px; max-width: 100vw; }
 
 
 
-<details open>
+<details close>
 <summary><strong>60% completion - Finished february 22, 2026</strong></summary>
 # Frontend Completion Report — 60%
 
@@ -577,7 +577,7 @@ The following features are referenced in the app but have no dedicated `<section
 *Frontend built with Tailwind CSS (CDN), custom `style.css`, vanilla HTML, and zero component frameworks.*
 </details>
 
-<details open>
+<details close>
 <summary><strong>100% completion - Finished Febrruary 27,2026</strong></summary>
 # DOM Manipulation — Implementation Documentation
 
