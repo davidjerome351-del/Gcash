@@ -25,6 +25,7 @@ No backend integration is implemented.
 -   Jerome E. David
 -   Airon Gabrielle Urbano
 -   Kyla Quite
+-   Weslie Ronquillo
 
 ------------------------------------------------------------------------
 
